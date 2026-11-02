@@ -1,0 +1,568 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teatro Municipal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theater: {
+                            dark: '#0f0f11',
+                            card: '#18181c',
+                            gold: '#d4af37',
+                            goldHover: '#e5c158',
+                            burgundy: '#800020',
+                            burgundyDark: '#5c0017',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f0f11;
+            color: #e4e4e7;
+        }
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-theater-dark text-gray-200 antialiased selection:bg-theater-gold selection:text-black">
+
+    {# Barra de navegación #}
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-theater-dark/90 backdrop-blur-md border-b border-theater-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-[280px_1fr_280px] items-center h-20 gap-4">
+                {# Logo #}
+                <div class="flex items-center justify-start">
+                    <a href="{% url 'cartelera_home' %}" class="flex items-center space-x-3 group">
+                        <img src="{% static 'cartelera/img/logo_villarrica.png' %}" alt="Municipalidad de Villarrica" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform">
+                        <div>
+                            <span class="block font-serif text-lg font-bold tracking-wider text-white group-hover:text-theater-gold transition-colors">TEATRO MUNICIPAL</span>
+                            <span class="block text-xs uppercase tracking-widest text-theater-gold/80">Villarrica</span>
+                        </div>
+                    </a>
+                </div>
+                
+
+                {# Menu #}
+                <nav class="hidden md:flex items-center justify-center space-x-8">
+                    <a href="{% url 'cartelera_home' %}" class="text-sm font-medium text-theater-gold transition-colors">Inicio</a>
+                    <a href="{% url 'escuela_cursos' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Escuela Municipal</a>
+                    <a href="{% url 'sobre_el_teatro' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Sobre el Teatro</a>
+                    <a href="{% url 'contacto' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Contacto</a>
+                </nav>
+
+                <!-- Columna 3: Botón de acción o espacio de equilibrio (Alineado a la derecha) -->
+                <div class="hidden md:flex items-center justify-end">
+                    {% block navbar_right %}
+                        {# Boton action #}
+                        <div class="hidden md:flex items-center space-x-4">
+                            <a href="#cartelera" class="bg-gradient-to-r from-theater-gold to-[#f3e5ab] text-black font-semibold text-sm px-5 py-2.5 rounded-full shadow-lg hover:shadow-theater-gold/20 hover:brightness-110 transition-all transform hover:-translate-y-0.5">
+                                <i class="fa-solid fa-ticket mr-2"></i> Ver Funciones
+                            </a>
+                        </div>
+                    {% endblock %}
+                </div>
+
+                {# Menu para moviles #}
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-theater-gold focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    {# Seccion hero #}
+    <section class="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTup3eyTd3ezIoQVZ_IA5a23XWKIxKtqvbKTITTe0ZnIa_EDb4oMT-jyBSa&s=10" alt="Teatro Interior" class="w-full h-full object-cover object-center scale-105 animate-pulse duration-[10000ms]">
+            <div class="absolute inset-0 bg-gradient-to-t from-theater-dark via-theater-dark/70 to-theater-dark/40"></div>
+            <div class="absolute inset-0 bg-radial-at-c from-transparent via-theater-dark/60 to-theater-dark"></div>
+        </div>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-12">
+            <span class="inline-block py-1.5 px-4 sm:px-6 lg:px-8 text-center pt-12">
+                <i class="fa-solid fa-star mr-1"></i> Temporada 2026
+            </span>
+            <h1 class="font-serif text-4xl sm:text-6xl font-bold text-white tracking-tight leading-tight mb-6">
+                Bienvenidos al <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-theater-gold via-[#ffe89c] to-theater-gold italic">Teatro Municipal de Villarrica</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-base sm:text-lg text-gray-300 font-light mb-8">
+                Consulta las obras disponibles y reserva tu entradas
+            </p>
+        </div>
+    </section>
+
+    {# Cartelera Dinámica #}
+    <main>
+        <section id="cartelera" class="py-16 bg-theater-dark relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <span class="text-theater-gold font-semibold uppercase tracking-widest text-xs">Programación Vigente</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mt-2 mb-4">Próximos Eventos</h2>
+                    <div class="w-24 h-1 bg-theater-gold mx-auto mb-6"></div>
+                    <p class="text-gray-400 text-sm sm:text-base">Filtra por categoría para encontrar tus espectáculos preferidos.</p>
+                </div>
+
+                {# Botones de Filtro por categoria #}
+                <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-4 mb-12" id="filter-container">
+                    <button data-filter="all" class="filter-btn active-filter px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-theater-gold text-black shadow-md">
+                        Todos
+                    </button>
+                    <button data-filter="Teatro" class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-theater-card text-gray-300 hover:text-white hover:bg-theater-card/80 border border-white/10">
+                        Teatro
+                    </button>
+                    <button data-filter="Danza" class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-theater-card text-gray-300 hover:text-white hover:bg-theater-card/80 border border-white/10">
+                        Danza
+                    </button>
+                    <button data-filter="Música" class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-theater-card text-gray-300 hover:text-white hover:bg-theater-card/80 border border-white/10">
+                        Música
+                    </button>
+                    <button data-filter="Poesía" class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-theater-card text-gray-300 hover:text-white hover:bg-theater-card/80 border border-white/10">
+                        Poesía
+                    </button>
+                    <button data-filter="Comedia" class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-theater-card text-gray-300 hover:text-white hover:bg-theater-card/80 border border-white/10">
+                        Comedia
+                    </button>
+                    <button data-filter="Infantil" class="filter-btn px-5 py-2.5 rounded-full text-sm font-medium transition-all bg-theater-card text-gray-300 hover:text-white hover:bg-theater-card/80 border border-white/10">
+                        Infantil
+                    </button>
+                </div>
+
+                {# Grid de funciones #}
+                <div id="events-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    {% for funcion in funciones %}
+                    <div class="event-card group bg-theater-card rounded-2xl overflow-hidden border border-white/10 hover:border-theater-gold/50 transition-all duration-300 shadow-xl flex flex-col" data-category="{{ funcion.obra.get_categoria_display }}">
+                        <div class="relative h-64 overflow-hidden">
+                            {% if funcion.obra.imagen_url %}
+                                <img src="{{ funcion.obra.imagen_url }}" alt="{{ funcion.obra.titulo }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            {% else %}
+                                <div class="w-full h-full bg-slate-800 flex items-center justify-center text-gray-500 font-semibold">
+                                    <i class="fa-solid fa-masks-theater text-4xl"></i>
+                                </div>
+                            {% endif %}
+                            <div class="absolute inset-0 bg-gradient-to-t from-theater-card via-transparent to-transparent"></div>
+                            <span class="absolute top-4 left-4 bg-theater-burgundy text-theater-gold text-xs font-semibold px-3 py-1.5 rounded-full border border-theater-gold/30">
+                                {{ funcion.obra.get_categoria_display }}
+                            </span>
+                            <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-gray-300">
+                                <span class="bg-black/60 px-2.5 py-1 rounded-md backdrop-blur-sm">
+                                    <i class="fa-regular fa-calendar mr-1.5 text-theater-gold"></i> {{ funcion.fecha|date:"d M, Y" }}
+                                </span>
+                                <span class="bg-black/60 px-2.5 py-1 rounded-md backdrop-blur-sm">
+                                    <i class="fa-regular fa-clock mr-1.5 text-theater-gold"></i> {{ funcion.hora|time:"H:i" }} hs
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col justify-between">
+                            <div>
+                                <h3 class="font-serif text-xl font-bold text-white group-hover:text-theater-gold transition-colors mb-2">
+                                    {{ funcion.obra.titulo }}
+                                </h3>
+                                <p class="text-gray-400 text-sm line-clamp-2 mb-4">
+                                    {{ funcion.obra.descripcion}}
+                                </p>
+                            </div>
+                            <div class="pt-4 border-t border-white/10 flex items-center justify-between">
+                                <div>
+                                    <span class="block text-xs text-gray-400">Entrada</span>
+                                    {% if funcion.tipo_acceso == 'LG' %}
+                                        <span class="text-emerald-400 font-bold text-sm flex items-center">
+                                            <i class="fa-solid fa-door-open mr-1.5 text-xs"></i> Libre y Gratuita
+                                        </span>
+                                    {% elif funcion.tipo_acceso == 'GR' %}
+                                        <span class="text-cyan-400 font-bold text-sm flex items-center">
+                                            <i class="fa-solid fa-ticket mr-1.5 text-xs"></i> Gratis (con Reserva)
+                                        </span>
+                                    {% else %}
+                                        <span class="text-theater-gold font-bold text-sm">
+                                            Gs. {{ funcion.precio|intcomma }}
+                                        </span>
+                                    {% endif %}
+                                </div>
+
+                                {% if funcion.requiere_reserva %}
+                                    <button
+                                        data-titulo="{{ funcion.obra.titulo|escapejs }}"
+                                        data-fecha="{{ funcion.fecha|date:'d M, Y' }} - {{ funcion.hora|time:'H:i' }} hs"
+                                        data-id="{{ funcion.id }}"
+                                        data-precio="{% if funcion.es_gratuita %}Gratuito{% else %}Gs. {{ funcion.precio|intcomma }}{% endif %}"
+                                        onclick="abrirModalDesdeBoton(this)"
+                                        class="bg-theater-gold hover:bg-theater-goldHover text-black font-semibold text-sm px-4 py-2.5 rounded-xl transition-all shadow-md flex items-center">
+                                        <i class="fa-solid fa-ticket mr-2"></i> Reservar
+                                    </button>
+                                {% else %}
+                                    <span class="bg-white/10 text-gray-300 text-xs font-medium px-3 py-2 rounded-xl border border-white/10 flex items-center">
+                                        <i class="fa-solid fa-users-line mr-1.5 text-emerald-400"></i> Por orden de llegada
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-span-1 md:col-span-2 lg:col-span-3 text-center py-16 bg-theater-card/50 rounded-2xl border border-white/5">
+                        <i class="fa-solid fa-calendar-xmark text-4xl text-theater-gold mb-3 block"></i>
+                        <h3 class="text-xl font-bold text-white mb-1">No hay funciones disponibles por el momento</h3>
+                        <p class="text-gray-400 text-sm">Vuelve a consultar pronto para ver la nueva programación.</p>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </section>
+
+        {# Modal de Reserva #}
+        <div id="ticket-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+            <div class="bg-theater-card border border-theater-gold/40 rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-2xl">
+                <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-theater-gold text-xl focus:outline-none">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="flex items-center space-x-3 mb-6">
+                    <div class="w-12 h-12 rounded-xl bg-theater-burgundy text-theater-gold flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-ticket"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs uppercase tracking-wider text-theater-gold font-semibold">Reserva de Entradas</span>
+                        <h3 id="modal-event-title" class="font-serif text-xl font-bold text-white">Obra</h3>
+                    </div>
+                </div>
+
+                <div class="space-y-4 mb-6 bg-theater-dark p-4 rounded-xl border border-white/5 text-sm">
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Fecha y Hora:</span>
+                        <span id="modal-event-time" class="text-white font-medium"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Ubicación:</span>
+                        <span class="text-theater-gold font-medium">Sala Principal del Teatro</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-400">Precio de Entrada:</span>
+                        <span id="modal-event-price" class="text-theater-gold font-medium"></span>
+                    </div>
+                </div>
+
+                <form id="reserva-form" onsubmit="enviarWhatsapp(event)" class="mt-6 space-y-4">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-300 font-semibold mb-1.5">Cantidad</label>
+                            <select id="cantEntrada" onchange="updateTotal()" class="w-full bg-theater-dark border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-theater-gold">
+                                <option value="1">1 Entrada</option>
+                                <option value="2">2 Entradas</option>
+                                <option value="3">3 Entradas</option>
+                                <option value="4">4 Entradas</option>
+                                <option value="5">5 Entradas</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-300 font-semibold mb-1.5">Total a Pagar</label>
+                            <div id="modal-total-price" class="w-full bg-theater-dark/50 border border-theater-gold/30 rounded-xl px-3 py-2.5 text-theater-gold font-bold text-base flex items-center">
+                                0
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs uppercase tracking-wider text-gray-300 font-semibold mb-1.5">Nombre del Titular *</label>
+                        <input id="cliente-nombre" type="text" required class="w-full bg-theater-dark border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-theater-gold" placeholder="Tu nombre completo">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-300 font-semibold mb-1.5">Teléfono *</label>
+                            <input id="cliente-telefono" type="tel" required class="w-full bg-theater-dark border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-theater-gold" placeholder="Ej: 0981xxxxxx">
+                        </div>
+                        <div>
+                            <label class="block text-xs uppercase tracking-wider text-gray-300 font-semibold mb-1.5">Correo Electrónico *</label>
+                            <input id="cliente-email" type="email" required class="w-full bg-theater-dark border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-theater-gold" placeholder="correo@ejemplo.com">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-theater-gold hover:bg-theater-goldHover text-black font-bold py-3.5 rounded-xl transition-all shadow-lg text-sm flex items-center justify-center mt-4">
+                        <i class="fa-solid fa-check-circle mr-2"></i> Confirmar Reserva
+                    </button>
+                    <p class="text-xs text-gray-400 text-center font-light">
+                        Se abrirá WhatsApp con los datos de tu reserva listos.
+                    </p>
+                </form>
+            </div>
+        </div>
+
+        {# Notificacion #}
+        <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 bg-theater-card border border-theater-gold text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center space-x-3">
+            <div class="text-theater-gold text-xl"><i class="fa-solid fa-circle-check"></i></div>
+            <div>
+                <h5 id="toast-title" class="font-bold text-sm">¡Operación Exitosa!</h5>
+                <p id="toast-msg" class="text-xs text-gray-300">Su solicitud ha sido procesada correctamente.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-theater-gold/20 pt-16 pb-12 text-gray-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-white/10">
+            
+            <!-- Columna 1: Ubicación e Información -->
+            <div>
+                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-location-dot text-theater-gold mr-2"></i> Ubicación
+                </h4>
+                <p class="text-xs sm:text-sm leading-relaxed mb-3 font-light">
+                    Mcal. Estigarribia c/ Gral. Díaz<br>
+                    Villarrica, Departamento del Guairá, Paraguay
+                </p>
+                <p class="text-xs text-theater-gold/80 font-medium">
+                    <i class="fa-regular fa-clock mr-1"></i> Lunes a Viernes: 07:00 - 13:00 hs <br>
+                    <i class="fa-regular fa-clock mr-1"></i> Sábados: 07:00 - 11:00 hs
+                </p>
+            </div>
+
+            <!-- Columna 2: Enlaces de Interés -->
+            <div>
+                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-compass text-theater-gold mr-2"></i> Enlaces de Interés
+                </h4>
+                <ul class="space-y-2 text-xs sm:text-sm">
+                    <li><a href="{% url 'cartelera_home' %}" class="hover:text-theater-gold transition-colors">Inicio / Cartelera</a></li>
+                    <li><a href="{% url 'escuela_cursos' %}" class="hover:text-theater-gold transition-colors">Escuela Municipal</a></li>
+                    <li><a href="{% url 'sobre_el_teatro' %}" class="hover:text-theater-gold transition-colors">Sobre el Teatro</a></li>
+                    <li><a href="{% url 'contacto' %}" class="hover:text-theater-gold transition-colors">Contacto</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 3: Redes Sociales y Contacto -->
+            <div>
+                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-share-nodes text-theater-gold mr-2"></i> Conéctate
+                </h4>
+                <p class="text-xs sm:text-sm font-light mb-4">
+                    Síguenos en nuestras redes sociales oficiales para enterarte de todas las funciones y novedades.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="https://facebook.com/municipalidadvca" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="https://instagram.com/municipalidad_vca" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://wa.me/595994232983" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all" title="WhatsApp">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                    </a>
+                    <a href="mailto:munivca@gmail.com" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all" title="Correo institucional">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Fila inferior de derechos -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
+            <p>&copy; 2026 Teatro Municipal de Villarrica. Todos los derechos reservados.</p>
+            <a href="/admin/" class="text-gray-600 hover:text-theater-gold transition-colors underline">
+                Acceso Administrativo
+            </a>
+        </div>
+    </div>
+</footer>
+
+    {#Javascript del filtro y modal#}
+    <script>
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const eventCards = document.querySelectorAll('.event-card');
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterButtons.forEach(b => {
+                    b.classList.remove('bg-theater-gold', 'text-black', 'shadow-md');
+                    b.classList.add('bg-theater-card', 'text-gray-300', 'border', 'border-white/10');
+                });
+                btn.classList.remove('bg-theater-card', 'text-gray-300', 'border', 'border-white/10');
+                btn.classList.add('bg-theater-gold', 'text-black', 'shadow-md');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                eventCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        let precioUnitarioNum = 0;
+
+        function openModal(title, time, funcionId, precio) {
+            const modal = document.getElementById('ticket-modal');
+            document.getElementById('modal-event-title').innerText = title;
+            document.getElementById('modal-event-time').innerText = time;
+
+            const textoPrecio = precio || 'Gratuito';
+            document.getElementById('modal-event-price').innerText = textoPrecio;
+
+            //extraer los numeros del textoPrecio
+            //si dice gratuito, o viene vacio, el valor es 0
+            textoLimpio = textoPrecio.replace(/[^0-9.,\s]/g, "");
+
+            const numero = textoLimpio.replace(/[.,\s]/g, "");
+
+            precioUnitarioNum = parseInt(numero) || 0;
+
+            //resetear el contador a 1 cada que se abre un modal
+            const selectCant = document.getElementById('cantEntrada');
+            if (selectCant) selectCant.value = '1';
+
+            updateTotal();
+
+            //mostrar el modal y bloquear el scroll de la pagina
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function abrirModalDesdeBoton(button) {
+            const titulo = button.getAttribute('data-titulo');
+            const fecha = button.getAttribute('data-fecha');
+            const funcionId = button.getAttribute('data-id');
+            const precio = button.getAttribute('data-precio');
+
+            openModal(titulo, fecha, funcionId, precio);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('ticket-modal');
+            if (!modal) return;
+
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+
+            const form = document.getElementById('reserva-form');
+            if (form){
+                form.reset();
+            }
+
+            const selectCant = document.getElementById('cantEntrada');
+            if (selectCant) {
+                selectCant.value = '1';
+            }
+        }
+
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-msg').innerText = message;
+
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4000);
+        }
+
+        function handleTicketPurchase(event) {
+            event.preventDefault();
+            closeModal();
+            showToast('¡Reserva Exitosa!', 'Tu solicitud de reserva ha sido registrada.');
+        }
+
+        function updateTotal() {
+            const selectCant = document.getElementById('cantEntrada');
+            const contenedorTotal = document.getElementById('modal-total-price');
+
+            if (!selectCant || !contenedorTotal) return;
+
+            const cant = parseInt(selectCant.value) || 1;
+            const total = cant * precioUnitarioNum;
+
+            //si el precio es mayor a 0, muestra el total, si es 0, muestra gratuito
+            if (precioUnitarioNum > 0){
+                contenedorTotal.innerText = `Gs. ${total.toLocaleString()}`;
+            } else {
+                contenedorTotal.innerText = 'Entrada Gratuita';
+            }
+        }
+
+        function enviarWhatsapp(event) {
+            event.preventDefault();
+
+            //Numero del teatro (para demo se sustituye con mi numero personal)
+            const numeroTeatro = "595991453603";
+
+            //datos ingresados por el usuario
+            const nombre = document.getElementById('cliente-nombre').value.trim();
+            const telefono = document.getElementById('cliente-telefono').value.trim();
+            const email = document.getElementById('cliente-email').value.trim();
+            const cantidad = document.getElementById('cantEntrada').value;
+            const totalPagar = document.getElementById('modal-total-price').innerText.trim();
+
+            //datos de la funcion
+            const obraTitulo = document.getElementById('modal-event-title').innerText.trim();
+            const funcionFecha = document.getElementById('modal-event-time').innerText.trim();
+
+            //Mensaje formateado
+            const mensaje = `Hola Teatro Municipal, solicito una reserva con los siguientes datos:%0A%0A` +
+                            `🎭*Obra:* ${obraTitulo}%0A` +
+                            `📅*Funcion:* ${funcionFecha}%0A%0A` +
+                            `🎟️*Cantidad:* ${cantidad} entrada(s) %0A` +
+                            `💰*Total a Pagar:* ${totalPagar}%0A%0A` +
+                            `👤*Nombre:* ${nombre}%0A` +
+                            `📞*Teléfono:* ${telefono}%0A` +
+                            `✉️*Correo:* ${email}`;
+            
+            //enlace
+            const urlWhatsapp = `https://wa.me/${numeroTeatro}?text=${mensaje}`;
+            window.open(urlWhatsapp, '_blank');
+
+        }
+
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('ticket-modal');
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+
+
+
+
+
+
+</body>
+
+
+
+</html>

@@ -1,0 +1,303 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre el Teatro - Teatro Municipal de Villarrica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theater: {
+                            dark: '#0f0f11',
+                            card: '#18181c',
+                            gold: '#d4af37',
+                            goldHover: '#e5c158',
+                            burgundy: '#800020',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { overflow-y: scroll; }
+        body { font-family: 'Inter', sans-serif; background-color: #0f0f11; color: #e4e4e7; }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+    </style>
+</head>
+<body class="bg-theater-dark text-gray-200 antialiased selection:bg-theater-gold selection:text-black">
+
+    <!-- Barra de navegación (Mantiene el mismo grid simétrico) -->
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-theater-dark/90 backdrop-blur-md border-b border-theater-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-[280px_1fr_280px] items-center h-20 gap-4">
+                
+                <!-- Columna 1: Logo -->
+                <div class="flex items-center justify-start">
+                    <a href="{% url 'cartelera_home' %}" class="flex items-center space-x-3 group">
+                        <img src="{% static 'cartelera/img/logo_villarrica.png' %}" alt="Municipalidad de Villarrica" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform">
+                        <div>
+                            <span class="block font-serif text-lg font-bold tracking-wider text-white group-hover:text-theater-gold transition-colors">TEATRO MUNICIPAL</span>
+                            <span class="block text-xs uppercase tracking-widest text-theater-gold/80">Villarrica</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Columna 2: Menú central -->
+                <nav class="hidden md:flex items-center justify-center space-x-8">
+                    <a href="{% url 'cartelera_home' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Inicio</a>
+                    <a href="{% url 'escuela_cursos' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Escuela Municipal</a>
+                    <a href="{% url 'sobre_el_teatro' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Sobre el Teatro</a>
+                    <a href="{% url 'contacto' %}" class="text-sm font-medium text-theater-gold transition-colors">Contacto</a>
+                </nav>
+
+                <!-- Columna 3: Espaciador fantasma para equilibrio -->
+                <div class="hidden md:flex items-center justify-end">
+                    <div class="w-[170px]"></div>
+                </div>
+
+                <!-- Botón móvil -->
+                <div class="flex items-center justify-end md:hidden col-start-3">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-theater-gold focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Sección de Contacto y Ubicación -->
+    <section id="contacto" class="py-24 bg-theater-dark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-theater-gold font-semibold uppercase tracking-widest text-xs">Estamos Para Servirte</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mt-2 mb-4">Contacto y Boletería</h2>
+                <div class="w-24 h-1 bg-theater-gold mx-auto mb-6"></div>
+                <p class="text-gray-400 text-sm sm:text-base">Visítanos, comunícate con nosotros o envíanos tus consultas sobre programación y alquiler de sala.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Info & Map -->
+                <div class="space-y-8">
+                    <div class="bg-theater-card rounded-2xl p-8 border border-white/10 shadow-xl space-y-6">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-theater-burgundy text-theater-gold flex items-center justify-center text-xl shrink-0 mt-1">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white text-base">Ubicación</h4>
+                                <p class="text-gray-400 text-sm mt-1">Mcal. Estigarribia c/ Gral. Díaz.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-theater-burgundy text-theater-gold flex items-center justify-center text-xl shrink-0 mt-1">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white text-base">Horarios de Boletería</h4>
+                                <p class="text-gray-400 text-sm mt-1">Lunes a Viernes: 07:00 hs a 13:00 hs.<br>Sábados: 07:00 hs a 11:00 hs.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-theater-burgundy text-theater-gold flex items-center justify-center text-xl shrink-0 mt-1">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white text-base">Teléfono & WhatsApp</h4>
+                                <p class="text-gray-400 text-sm mt-1">+595 994 232983 </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 rounded-xl bg-theater-burgundy text-theater-gold flex items-center justify-center text-xl shrink-0 mt-1">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white text-base">Correo Electrónico</h4>
+                                <p class="text-gray-400 text-sm mt-1">munivca@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Google Maps Container -->
+                    <div class="relative rounded-2xl overflow-hidden border border-white/10 h-64 shadow-xl">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3592.6819262769704!2d-56.4495963!3d-25.7810676!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945ecd004035adf1%3A0x83700de958a7a125!2sTeatro%20Municipal%20de%20Villarrica!5e0!3m2!1ses!2spy!4v1793045496297!5m2!1ses!2spy" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+
+                        <!-- Badge flotante con enlace directo -->
+                        <div class="absolute bottom-4 right-4 z-10">
+                            <a href="https://maps.app.goo.gl/k8risys5DntDGdf49" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            class="bg-theater-card/90 border border-theater-gold/50 px-4 py-2 rounded-xl shadow-2xl flex items-center space-x-3 hover:bg-theater-gold hover:text-black transition-all group">
+                                <i class="fa-solid fa-map-location-dot text-theater-gold group-hover:text-black text-xl"></i>
+                                <div>
+                                    <span class="block text-[10px] text-gray-300 group-hover:text-black uppercase tracking-wider font-medium">Teatro Municipal</span>
+                                    <span class="text-xs font-bold text-white group-hover:text-black">Abrir en Google Maps</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-theater-card rounded-2xl p-8 sm:p-10 border border-white/10 shadow-xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-serif text-2xl font-bold text-white mb-2">Envíanos un Mensaje</h3>
+                        <p class="text-gray-400 text-sm mb-6">¿Tienes dudas sobre entradas grupales, talleres o alquiler del salón? Escríbenos.</p>
+                        
+                        <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-gray-300 font-semibold mb-2">Nombre Completo</label>
+                                <input type="text" required class="w-full bg-theater-dark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-theater-gold transition-colors text-sm" placeholder="Ej. María Pérez">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-gray-300 font-semibold mb-2">Correo Electrónico</label>
+                                <input type="email" required class="w-full bg-theater-dark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-theater-gold transition-colors text-sm" placeholder="maria@example.com">
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-gray-300 font-semibold mb-2">Asunto</label>
+                                <select class="w-full bg-theater-dark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-theater-gold transition-colors text-sm">
+                                    <option>Consulta sobre Entradas</option>
+                                    <option>Inscripción a Talleres</option>
+                                    <option>Alquiler de Sala</option>
+                                    <option>Prensa y Difusión</option>
+                                    <option>Otro</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs uppercase tracking-wider text-gray-300 font-semibold mb-2">Mensaje</label>
+                                <textarea rows="4" required class="w-full bg-theater-dark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-theater-gold transition-colors text-sm" placeholder="Escribe tu consulta aquí..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-theater-gold hover:bg-theater-goldHover text-black font-bold py-3.5 rounded-xl transition-all shadow-lg text-sm flex items-center justify-center">
+                                <i class="fa-regular fa-paper-plane mr-2"></i> Enviar Mensaje
+                            </button>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {# Notificacion #}
+        <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-32 opacity-0 transition-all duration-300 bg-theater-card border border-theater-gold text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center space-x-3">
+            <div class="text-theater-gold text-xl"><i class="fa-solid fa-circle-check"></i></div>
+            <div>
+                <h5 id="toast-title" class="font-bold text-sm">¡Operación Exitosa!</h5>
+                <p id="toast-msg" class="text-xs text-gray-300">Su solicitud ha sido procesada correctamente.</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-theater-gold/20 pt-16 pb-12 text-gray-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-white/10">
+            
+            <!-- Columna 1: Ubicación e Información -->
+            <div>
+                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-location-dot text-theater-gold mr-2"></i> Ubicación
+                </h4>
+                <p class="text-xs sm:text-sm leading-relaxed mb-3 font-light">
+                    Mcal. Estigarribia c/ Gral. Díaz<br>
+                    Villarrica, Departamento del Guairá, Paraguay
+                </p>
+                <p class="text-xs text-theater-gold/80 font-medium">
+                    <i class="fa-regular fa-clock mr-1"></i> Lunes a Viernes: 07:00 - 13:00 hs <br>
+                    <i class="fa-regular fa-clock mr-1"></i> Sábados: 07:00 - 11:00 hs
+                </p>
+            </div>
+
+            <!-- Columna 2: Enlaces de Interés -->
+            <div>
+                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-compass text-theater-gold mr-2"></i> Enlaces de Interés
+                </h4>
+                <ul class="space-y-2 text-xs sm:text-sm">
+                    <li><a href="{% url 'cartelera_home' %}" class="hover:text-theater-gold transition-colors">Inicio / Cartelera</a></li>
+                    <li><a href="{% url 'escuela_cursos' %}" class="hover:text-theater-gold transition-colors">Escuela Municipal</a></li>
+                    <li><a href="{% url 'sobre_el_teatro' %}" class="hover:text-theater-gold transition-colors">Sobre el Teatro</a></li>
+                    <li><a href="{% url 'contacto' %}" class="hover:text-theater-gold transition-colors">Contacto</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 3: Redes Sociales y Contacto -->
+            <div>
+                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-share-nodes text-theater-gold mr-2"></i> Conéctate
+                </h4>
+                <p class="text-xs sm:text-sm font-light mb-4">
+                    Síguenos en nuestras redes sociales oficiales para enterarte de todas las funciones y novedades.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="mailto:cultura@villarrica.gov.py" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all" title="Correo institucional">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Fila inferior de derechos -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
+            <p>&copy; 2026 Teatro Municipal de Villarrica. Todos los derechos reservados.</p>
+            <a href="/admin/" class="text-gray-600 hover:text-theater-gold transition-colors underline">
+                Acceso Administrativo
+            </a>
+        </div>
+    </div>
+</footer>
+
+    <script>
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-msg').innerText = message;
+
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 4000);
+        }
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            event.target.reset();
+            showToast('¡Mensaje Enviado!', 'Nos pondremos en contacto contigo a la brevedad.');
+        }
+        
+    </script>
+</body>
+</html>

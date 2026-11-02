@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escuela Municipal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theater: {
+                            dark: '#0f0f11',
+                            card: '#18181c',
+                            gold: '#d4af37',
+                            goldHover: '#e5c158',
+                            burgundy: '#800020',
+                            burgundyDark: '#5c0017',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f0f11;
+            color: #e4e4e7;
+        }
+        .font-playfair {
+            font-family: 'Playfair Display', serif;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body class="bg-theater-dark text-gray-200 antialiased selection:bg-theater-gold selection:text-black">
+    {# Barra de navegación #}
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-theater-dark/90 backdrop-blur-md border-b border-theater-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-[280px_1fr_280px] items-center h-20 gap-4">
+                {# Logo #}
+                <div class="flex items-center justify-start">
+                    <a href="{% url 'cartelera_home' %}" class="flex items-center space-x-3 group">
+                        <img src="{% static 'cartelera/img/logo_villarrica.png' %}" alt="Municipalidad de Villarrica" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform">
+                        <div>
+                            <span class="block font-serif text-lg font-bold tracking-wider text-white group-hover:text-theater-gold transition-colors">TEATRO MUNICIPAL</span>
+                            <span class="block text-xs uppercase tracking-widest text-theater-gold/80">Villarrica</span>
+                        </div>
+                    </a>
+                </div>
+                
+
+                {# Menu #}
+                <nav class="hidden md:flex items-center justify-center space-x-8">
+                    <a href="{% url 'cartelera_home' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Inicio</a>
+                    <a href="{% url 'escuela_cursos' %}" class="text-sm font-medium text-theater-gold transition-colors">Escuela Municipal</a>
+                    <a href="{% url 'sobre_el_teatro' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Sobre el Teatro</a>
+                    <a href="{% url 'contacto' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Contacto</a>
+                </nav>
+
+                <!-- Columna 3: Botón de acción o espacio de equilibrio (Alineado a la derecha) -->
+                <div class="hidden md:flex items-center justify-end">
+                    {% block navbar_right %}
+                        
+                    {% endblock %}
+                </div>
+
+                {# Menu para moviles #}
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-theater-gold focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Listado de Cursos -->
+    <main class="py-12">
+        <section id="talleres" class="py-24 bg-theater-card/40 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-theater-gold font-semibold uppercase tracking-widest text-xs">Escuela de Espectadores y Artistas</span>
+                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mt-2 mb-4">Talleres y Formación</h2>
+                <div class="w-24 h-1 bg-theater-gold mx-auto mb-6"></div>
+                <p class="text-gray-400 text-sm sm:text-base">Desarrolla tu talento con nuestros cursos anuales dictados por maestros consagrados. Abierto a todas las edades.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Workshop 1 -->
+                <div class="bg-theater-card rounded-2xl p-8 border border-white/10 hover:border-theater-gold/40 transition-all flex flex-col justify-between shadow-xl">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-theater-burgundy text-theater-gold flex items-center justify-center text-2xl mb-6 shadow-md">
+                            <i class="fa-solid fa-masks-theater"></i>
+                        </div>
+                        <span class="text-xs uppercase tracking-wider text-theater-gold font-semibold">Principiantes y Avanzados</span>
+                        <h3 class="font-serif text-2xl font-bold text-white mt-2 mb-3">Taller de Actuación Teatral</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Técnicas de expresión corporal, improvisación, construcción de personajes y muestra final en sala principal.</p>
+                    </div>
+                    <div class="pt-6 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-gray-300"><i class="fa-regular fa-clock mr-1 text-theater-gold"></i> Martes y Jueves</span>
+                        <a href="{% url 'contacto' %}" class="text-theater-gold hover:text-white text-sm font-semibold flex items-center">
+                            Inscribirse <i class="fa-solid fa-chevron-right ml-1.5 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Workshop 2 -->
+                <div class="bg-theater-card rounded-2xl p-8 border border-white/10 hover:border-theater-gold/40 transition-all flex flex-col justify-between shadow-xl">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-theater-burgundy text-theater-gold flex items-center justify-center text-2xl mb-6 shadow-md">
+                            <i class="fa-solid fa-music"></i>
+                        </div>
+                        <span class="text-xs uppercase tracking-wider text-theater-gold font-semibold">Coral y Orquesta</span>
+                        <h3 class="font-serif text-2xl font-bold text-white mt-2 mb-3">Taller de Canto y Ensamble</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Entrenamiento vocal, técnica respiratoria, lectura musical y participación en conciertos de temporada.</p>
+                    </div>
+                    <div class="pt-6 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-gray-300"><i class="fa-regular fa-clock mr-1 text-theater-gold"></i> Lunes y Miércoles</span>
+                        <a href="#contacto" class="text-theater-gold hover:text-white text-sm font-semibold flex items-center">
+                            Inscribirse <i class="fa-solid fa-chevron-right ml-1.5 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Workshop 3 -->
+                <div class="bg-theater-card rounded-2xl p-8 border border-white/10 hover:border-theater-gold/40 transition-all flex flex-col justify-between shadow-xl">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-theater-burgundy text-theater-gold flex items-center justify-center text-2xl mb-6 shadow-md">
+                            <i class="fa-solid fa-child"></i>
+                        </div>
+                        <span class="text-xs uppercase tracking-wider text-theater-gold font-semibold">Infantil (6 a 12 años)</span>
+                        <h3 class="font-serif text-2xl font-bold text-white mt-2 mb-3">Iniciación al Teatro Infantil</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">Juegos teatrales, expresión creativa, confianza en uno mismo y desarrollo de la imaginación a través del juego.</p>
+                    </div>
+                    <div class="pt-6 border-t border-white/10 flex items-center justify-between">
+                        <span class="text-xs text-gray-300"><i class="fa-regular fa-clock mr-1 text-theater-gold"></i> Sábados por la mañana</span>
+                        <a href="#contacto" class="text-theater-gold hover:text-white text-sm font-semibold flex items-center">
+                            Inscribirse <i class="fa-solid fa-chevron-right ml-1.5 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+    </main>
+    <!-- Footer -->
+    <footer class="bg-black border-t border-theater-gold/20 pt-16 pb-12 text-gray-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-white/10">
+            
+            <!-- Columna 1: Ubicación e Información -->
+            <div>
+                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-location-dot text-theater-gold mr-2"></i> Ubicación
+                </h4>
+                <p class="text-xs sm:text-sm leading-relaxed mb-3 font-light">
+                    Mcal. Estigarribia c/ Gral. Díaz<br>
+                    Villarrica, Departamento del Guairá, Paraguay
+                </p>
+                <p class="text-xs text-theater-gold/80 font-medium">
+                    <i class="fa-regular fa-clock mr-1"></i> Lunes a Viernes: 07:00 - 13:00 hs <br>
+                    <i class="fa-regular fa-clock mr-1"></i> Sábados: 07:00 - 11:00 hs
+                </p>
+            </div>
+
+            <!-- Columna 2: Enlaces de Interés -->
+            <div>
+                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-compass text-theater-gold mr-2"></i> Enlaces de Interés
+                </h4>
+                <ul class="space-y-2 text-xs sm:text-sm">
+                    <li><a href="{% url 'cartelera_home' %}" class="hover:text-theater-gold transition-colors">Inicio / Cartelera</a></li>
+                    <li><a href="{% url 'escuela_cursos' %}" class="hover:text-theater-gold transition-colors">Escuela Municipal</a></li>
+                    <li><a href="{% url 'sobre_el_teatro' %}" class="hover:text-theater-gold transition-colors">Sobre el Teatro</a></li>
+                    <li><a href="{% url 'contacto' %}" class="hover:text-theater-gold transition-colors">Contacto</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 3: Redes Sociales y Contacto -->
+            <div>
+                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-share-nodes text-theater-gold mr-2"></i> Conéctate
+                </h4>
+                <p class="text-xs sm:text-sm font-light mb-4">
+                    Síguenos en nuestras redes sociales oficiales para enterarte de todas las funciones y novedades.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="mailto:cultura@villarrica.gov.py" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all" title="Correo institucional">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Fila inferior de derechos -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
+            <p>&copy; 2026 Teatro Municipal de Villarrica. Todos los derechos reservados.</p>
+            <a href="/admin/" class="text-gray-600 hover:text-theater-gold transition-colors underline">
+                Acceso Administrativo
+            </a>
+        </div>
+    </div>
+</footer>
+</body>
+
+
+
+</html>

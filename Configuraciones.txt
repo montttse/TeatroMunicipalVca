@@ -1,0 +1,24 @@
+Activar el entorno virtual (en Windows CMD)
+
+cd C:\Users\PC\Documents\Montse\teatroWeb
+venv\Scripts\activate.bat
+
+Aplicar migraciones:
+# 1. Crear planos
+python manage.py makemigrations
+
+# 2. Aplica los cambios
+python manage.py migrate
+
+Encender el servidor:
+python manage.py runserver
+python manage.py runserver 0.0.0.0:8000
+
+USUARIOS
+Superuser:
+Usuario: admin
+Contraseña: admin
+
+Usuario staff (del grupo Staff Teatro con solo ciertos permisos)
+Usuario: juan.Perez
+Contraseña: zx782d5z@ghD3Zg

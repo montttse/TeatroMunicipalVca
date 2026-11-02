@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre el Teatro - Teatro Municipal de Villarrica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        theater: {
+                            dark: '#0f0f11',
+                            card: '#18181c',
+                            gold: '#d4af37',
+                            goldHover: '#e5c158',
+                            burgundy: '#800020',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { overflow-y: scroll; }
+        body { font-family: 'Inter', sans-serif; background-color: #0f0f11; color: #e4e4e7; }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+    </style>
+</head>
+<body class="bg-theater-dark text-gray-200 antialiased selection:bg-theater-gold selection:text-black">
+
+    <!-- Barra de navegación (Mantiene el mismo grid simétrico) -->
+    {# Barra de navegación #}
+    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-theater-dark/90 backdrop-blur-md border-b border-theater-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-[280px_1fr_280px] items-center h-20 gap-4">
+                {# Logo #}
+                <div class="flex items-center justify-start">
+                    <a href="{% url 'cartelera_home' %}" class="flex items-center space-x-3 group">
+                        <img src="{% static 'cartelera/img/logo_villarrica.png' %}" alt="Municipalidad de Villarrica" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform">
+                        <div>
+                            <span class="block font-serif text-lg font-bold tracking-wider text-white group-hover:text-theater-gold transition-colors">TEATRO MUNICIPAL</span>
+                            <span class="block text-xs uppercase tracking-widest text-theater-gold/80">Villarrica</span>
+                        </div>
+                    </a>
+                </div>
+                
+
+                {# Menu #}
+                <nav class="hidden md:flex items-center justify-center space-x-8">
+                    <a href="{% url 'cartelera_home' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Inicio</a>
+                    <a href="{% url 'escuela_cursos' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Escuela Municipal</a>
+                    <a href="{% url 'sobre_el_teatro' %}" class="text-sm font-medium text-theater-gold transition-colors">Sobre el Teatro</a>
+                    <a href="{% url 'contacto' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Contacto</a>
+                </nav>
+
+                <!-- Columna 3: Botón de acción o espacio de equilibrio (Alineado a la derecha) -->
+                <div class="hidden md:flex items-center justify-end">
+                    {% block navbar_right %}
+                        
+                    {% endblock %}
+                </div>
+
+                {# Menu para moviles #}
+                <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-theater-gold focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal: Sobre el Teatro -->
+    <main>
+        <section id="sobre-nosotros" class="py-24 bg-theater-dark relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Image Composition -->
+                <div class="relative">
+                    <div class="relative z-10 rounded-3xl overflow-hidden border-2 border-theater-gold/30 shadow-2xl">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTup3eyTd3ezIoQVZ_IA5a23XWKIxKtqvbKTITTe0ZnIa_EDb4oMT-jyBSa&s=10" alt="Historia del Teatro Municipal" class="w-full h-[450px] object-cover">
+                    </div>
+                    <!-- Decorative Badge Box -->
+                    <div class="absolute -bottom-6 -right-6 z-20 bg-theater-card border border-theater-gold/40 p-6 rounded-2xl shadow-2xl max-w-xs hidden sm:block">
+                        <div class="font-serif text-3xl font-bold text-theater-gold mb-1">+100 Años</div>
+                        <p class="text-xs text-gray-300">De historia siendo el faro cultural de toda la región.</p>
+                    </div>
+                </div>
+
+                <!-- Text Content -->
+                <div>
+                    <span class="text-theater-gold font-semibold uppercase tracking-widest text-xs">Nuestro Legado</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-white mt-2 mb-6">Un Santuario de las Artes Escénicas</h2>
+                    <p class="text-gray-300 text-base leading-relaxed mb-6">
+                        La construcción de la estructura actual fue iniciada por Hans Shallman en 1911 y concluida en julio de 1913 bajo la administración de Cosme Codas Ynsfrán, 
+                        primer intendente de la ciudad. A lo largo de los años, varios artistas de renombre pasaron por sus puertas.
+                        El 26 de junio de 2026, el Teatro Municipal de Villarrica reabrió sus puertas luego de 15 años. 
+                        Dicha reapertura fue declarada de interés cultural nacional por la Cámara de Diputados de Paraguay.
+                    </p>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-8">
+                        Nuestra misión es democratizar el acceso al arte, brindando un escenario de primer nivel para artistas locales e internacionales, fomentando la educación artística y creando momentos inolvidables para cada espectador que cruza nuestras puertas.
+                    </p>
+
+                    <!-- Features checklist -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-6 h-6 rounded-full bg-theater-gold/20 text-theater-gold flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-200">Sala principal climatizada</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-6 h-6 rounded-full bg-theater-gold/20 text-theater-gold flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <span class="text-sm font-medium text-gray-200">Estacionamiento propio</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-theater-gold/20 pt-16 pb-12 text-gray-400 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-white/10">
+            
+            <!-- Columna 1: Ubicación e Información -->
+            <div>
+                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-location-dot text-theater-gold mr-2"></i> Ubicación
+                </h4>
+                <p class="text-xs sm:text-sm leading-relaxed mb-3 font-light">
+                    Mcal. Estigarribia c/ Gral. Díaz<br>
+                    Villarrica, Departamento del Guairá, Paraguay
+                </p>
+                <p class="text-xs text-theater-gold/80 font-medium">
+                    <i class="fa-regular fa-clock mr-1"></i> Lunes a Viernes: 07:00 - 13:00 hs <br>
+                    <i class="fa-regular fa-clock mr-1"></i> Sábados: 07:00 - 11:00 hs
+                </p>
+            </div>
+
+            <!-- Columna 2: Enlaces de Interés -->
+            <div>
+                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-compass text-theater-gold mr-2"></i> Enlaces de Interés
+                </h4>
+                <ul class="space-y-2 text-xs sm:text-sm">
+                    <li><a href="{% url 'cartelera_home' %}" class="hover:text-theater-gold transition-colors">Inicio / Cartelera</a></li>
+                    <li><a href="{% url 'escuela_cursos' %}" class="hover:text-theater-gold transition-colors">Escuela Municipal</a></li>
+                    <li><a href="{% url 'sobre_el_teatro' %}" class="hover:text-theater-gold transition-colors">Sobre el Teatro</a></li>
+                    <li><a href="{% url 'contacto' %}" class="hover:text-theater-gold transition-colors">Contacto</a></li>
+                </ul>
+            </div>
+
+            <!-- Columna 3: Redes Sociales y Contacto -->
+            <div>
+                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
+                    <i class="fa-solid fa-share-nodes text-theater-gold mr-2"></i> Conéctate
+                </h4>
+                <p class="text-xs sm:text-sm font-light mb-4">
+                    Síguenos en nuestras redes sociales oficiales para enterarte de todas las funciones y novedades.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="mailto:cultura@villarrica.gov.py" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all" title="Correo institucional">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Fila inferior de derechos -->
+        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
+            <p>&copy; 2026 Teatro Municipal de Villarrica. Todos los derechos reservados.</p>
+            <a href="/admin/" class="text-gray-600 hover:text-theater-gold transition-colors underline">
+                Acceso Administrativo
+            </a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
