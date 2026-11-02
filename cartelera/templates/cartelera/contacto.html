@@ -31,52 +31,12 @@
             }
         }
     </script>
-    <style>
-        html { overflow-y: scroll; }
-        body { font-family: 'Inter', sans-serif; background-color: #0f0f11; color: #e4e4e7; }
-        .font-playfair { font-family: 'Playfair Display', serif; }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body class="bg-theater-dark text-gray-200 antialiased selection:bg-theater-gold selection:text-black">
 
-    <!-- Barra de navegación (Mantiene el mismo grid simétrico) -->
-    <header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-theater-dark/90 backdrop-blur-md border-b border-theater-gold/20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-[280px_1fr_280px] items-center h-20 gap-4">
-                
-                <!-- Columna 1: Logo -->
-                <div class="flex items-center justify-start">
-                    <a href="{% url 'cartelera_home' %}" class="flex items-center space-x-3 group">
-                        <img src="{% static 'cartelera/img/logo_villarrica.png' %}" alt="Municipalidad de Villarrica" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform">
-                        <div>
-                            <span class="block font-serif text-lg font-bold tracking-wider text-white group-hover:text-theater-gold transition-colors">TEATRO MUNICIPAL</span>
-                            <span class="block text-xs uppercase tracking-widest text-theater-gold/80">Villarrica</span>
-                        </div>
-                    </a>
-                </div>
-
-                <!-- Columna 2: Menú central -->
-                <nav class="hidden md:flex items-center justify-center space-x-8">
-                    <a href="{% url 'cartelera_home' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Inicio</a>
-                    <a href="{% url 'escuela_cursos' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Escuela Municipal</a>
-                    <a href="{% url 'sobre_el_teatro' %}" class="text-sm font-medium hover:text-theater-gold transition-colors text-gray-400">Sobre el Teatro</a>
-                    <a href="{% url 'contacto' %}" class="text-sm font-medium text-theater-gold transition-colors">Contacto</a>
-                </nav>
-
-                <!-- Columna 3: Espaciador fantasma para equilibrio -->
-                <div class="hidden md:flex items-center justify-end">
-                    <div class="w-[170px]"></div>
-                </div>
-
-                <!-- Botón móvil -->
-                <div class="flex items-center justify-end md:hidden col-start-3">
-                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-theater-gold focus:outline-none p-2">
-                        <i class="fa-solid fa-bars text-2xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </header>
+    <!-- Incluimos el header -->
+    {% include 'cartelera/components/header.html' %}
 
     <main>
         <!-- Sección de Contacto y Ubicación -->
@@ -208,96 +168,11 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-black border-t border-theater-gold/20 pt-16 pb-12 text-gray-400 text-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 pb-12 border-b border-white/10">
-            
-            <!-- Columna 1: Ubicación e Información -->
-            <div>
-                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
-                    <i class="fa-solid fa-location-dot text-theater-gold mr-2"></i> Ubicación
-                </h4>
-                <p class="text-xs sm:text-sm leading-relaxed mb-3 font-light">
-                    Mcal. Estigarribia c/ Gral. Díaz<br>
-                    Villarrica, Departamento del Guairá, Paraguay
-                </p>
-                <p class="text-xs text-theater-gold/80 font-medium">
-                    <i class="fa-regular fa-clock mr-1"></i> Lunes a Viernes: 07:00 - 13:00 hs <br>
-                    <i class="fa-regular fa-clock mr-1"></i> Sábados: 07:00 - 11:00 hs
-                </p>
-            </div>
+    <!-- Incluimos el footer -->
+    {% include 'cartelera/components/footer.html' %}
 
-            <!-- Columna 2: Enlaces de Interés -->
-            <div>
-                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
-                    <i class="fa-solid fa-compass text-theater-gold mr-2"></i> Enlaces de Interés
-                </h4>
-                <ul class="space-y-2 text-xs sm:text-sm">
-                    <li><a href="{% url 'cartelera_home' %}" class="hover:text-theater-gold transition-colors">Inicio / Cartelera</a></li>
-                    <li><a href="{% url 'escuela_cursos' %}" class="hover:text-theater-gold transition-colors">Escuela Municipal</a></li>
-                    <li><a href="{% url 'sobre_el_teatro' %}" class="hover:text-theater-gold transition-colors">Sobre el Teatro</a></li>
-                    <li><a href="{% url 'contacto' %}" class="hover:text-theater-gold transition-colors">Contacto</a></li>
-                </ul>
-            </div>
+    <!-- Archivo externo del js -->
+    <script src="{% static 'js/main.js' %}"></script>
 
-            <!-- Columna 3: Redes Sociales y Contacto -->
-            <div>
-                <h4 class="font-serif text-white text-base font-bold mb-4 flex items-center">
-                    <i class="fa-solid fa-share-nodes text-theater-gold mr-2"></i> Conéctate
-                </h4>
-                <p class="text-xs sm:text-sm font-light mb-4">
-                    Síguenos en nuestras redes sociales oficiales para enterarte de todas las funciones y novedades.
-                </p>
-                <div class="flex space-x-4">
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </a>
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                    <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
-                    <a href="mailto:cultura@villarrica.gov.py" class="w-10 h-10 rounded-full bg-theater-card border border-white/10 flex items-center justify-center text-gray-300 hover:text-black hover:bg-theater-gold transition-all" title="Correo institucional">
-                        <i class="fa-solid fa-envelope"></i>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Fila inferior de derechos -->
-        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500">
-            <p>&copy; 2026 Teatro Municipal de Villarrica. Todos los derechos reservados.</p>
-            <a href="/admin/" class="text-gray-600 hover:text-theater-gold transition-colors underline">
-                Acceso Administrativo
-            </a>
-        </div>
-    </div>
-</footer>
-
-    <script>
-        function showToast(title, message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-title').innerText = title;
-            document.getElementById('toast-msg').innerText = message;
-
-            toast.classList.remove('translate-y-32', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-32', 'opacity-0');
-            }, 4000);
-        }
-
-        function handleContactSubmit(event) {
-            event.preventDefault();
-            event.target.reset();
-            showToast('¡Mensaje Enviado!', 'Nos pondremos en contacto contigo a la brevedad.');
-        }
-        
-    </script>
 </body>
 </html>

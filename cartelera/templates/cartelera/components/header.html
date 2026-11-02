@@ -1,0 +1,79 @@
+{% load static %}
+<!-- Plantilla de Cabecera -->
+
+<header id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-theater-dark/90 backdrop-blur-md border-b border-theater-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo -->
+                <div class="flex items-center justify-start">
+                    <a href="{% url 'cartelera_home' %}" class="flex items-center space-x-3 group">
+                        <img src="{% static 'cartelera/img/logo_villarrica.png' %}" alt="Municipalidad de Villarrica" class="h-12 w-auto object-contain group-hover:scale-105 transition-transform">
+                        <div>
+                            <span class="block font-serif text-lg font-bold tracking-wider text-white group-hover:text-theater-gold transition-colors">TEATRO MUNICIPAL</span>
+                            <span class="block text-xs uppercase tracking-widest text-theater-gold/80">Villarrica</span>
+                        </div>
+                    </a>
+                </div>
+                
+
+                <!-- Menu -->
+                <nav class="hidden lg:flex items-center space-x-8">
+                    <a href="{% url 'cartelera_home' %}" class="text-sm font-medium transition-colors 
+                        {% if request.resolver_match.url_name == 'cartelera_home' %}text-theater-gold 
+                        {% else %}hover:text-theater-gold text-gray-400
+                        {% endif %}">
+                        Inicio
+                    </a>
+                    <a href="{% url 'escuela_cursos' %}" class="text-sm font-medium transition-colors 
+                        {% if request.resolver_match.url_name == 'escuela_cursos' %}text-theater-gold 
+                        {% else %}hover:text-theater-gold text-gray-400
+                        {% endif %}">
+                        Escuela Municipal
+                    </a>
+                    <a href="{% url 'sobre_el_teatro' %}" class="text-sm font-medium transition-colors 
+                        {% if request.resolver_match.url_name == 'sobre_el_teatro' %}text-theater-gold 
+                        {% else %}hover:text-theater-gold text-gray-400
+                        {% endif %}">
+                        Sobre el Teatro
+                    </a>
+                    <a href="{% url 'contacto' %}" class="text-sm font-medium transition-colors 
+                        {% if request.resolver_match.url_name == 'contacto' %}text-theater-gold 
+                        {% else %}hover:text-theater-gold text-gray-400
+                        {% endif %}">
+                        Contacto
+                    </a>
+                </nav>
+
+                <!-- Boton -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    {% block navbar_right %}
+                        <div class="hidden md:flex items-center space-x-4">
+                            <a href="{% url 'cartelera_home' %}#cartelera" class="bg-gradient-to-r from-theater-gold to-[#f3e5ab] text-black font-semibold text-sm px-5 py-2.5 rounded-full shadow-lg hover:shadow-theater-gold/20 hover:brightness-110 transition-all transform hover:-translate-y-0.5">
+                                <i class="fa-solid fa-ticket mr-2"></i> Ver Funciones
+                            </a>
+                        </div>
+                    {% endblock %}
+                </div>
+
+                <!-- Menu para moviles -->
+                <button id="mobile-menu-btn" class="lg:hidden text-gray-300 focus:outline-none p-2">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Navegacion de menu para moviles -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-theater-card border-b border-theater-gold/20 px-4 pt-2 pb-6 space-y-3">
+            <a href="{% url 'cartelera_home' %}" class="block py-2 text-base font-medium hover:text-theater-gold transition-colors border-b border-gray-800">Inicio</a>
+            <a href="{% url 'escuela_cursos' %}" class="block py-2 text-base font-medium hover:text-theater-gold transition-colors border-b border-gray-800">Escuela Municipal</a>
+            <a href="{% url 'sobre_el_teatro' %}" class="block py-2 text-base font-medium hover:text-theater-gold transition-colors border-b border-gray-800">Sobre el Teatro</a>
+            <a href="{% url 'contacto' %}" class="block py-2 text-base font-medium hover:text-theater-gold transition-colors border-b border-gray-800">Contacto</a>
+            <div class="pt-2">
+                <a href="{% url 'cartelera_home' %}#cartelera" class="block text-center w-full bg-gradient-to-r from-theater-gold to-[#f3e5ab] text-black font-semibold text-sm px-5 py-2.5 rounded-full shadow-lg">
+                    <i class="fa-solid fa-ticket mr-2"></i>Ver funciones
+                </a>
+            </div>
+        </div>
+
+    </header>

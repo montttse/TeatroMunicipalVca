@@ -55,22 +55,19 @@ class Funcion(models.Model):
     def __str__(self):
         return f"{self.obra.titulo} - {self.get_tipo_acceso_display()}"
 
-# 3. Tabla de Reservas (Las entradas que sacan los usuarios)
-class Reserva(models.Model):
-    # Relación con la función elegida y con el usuario que la reservó
-    funcion = models.ForeignKey(Funcion, on_delete=models.CASCADE)
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    fecha_reserva = models.DateTimeField(auto_now_add=True)
-    codigo_qr = models.CharField(max_length=50, unique=True)
-
-    def __str__(self):
-        return f"Reserva de {self.usuario.username} para {self.funcion.obra.titulo}"
-
-# 4. Tabla de Cursos (para la Escuela Municipal)
+# 3. Tabla de Cursos (para la Escuela Municipal)
 class Curso(models.Model):
+    NIVELES = [
+            ('P', 'Principiantes'),
+            ('I', 'Intermedio'),
+            ('A', 'Avanzado'),
+            ('T', 'Todos los niveles'),
+        ]
+
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField()
     horario = models.CharField(max_length=100, help_text="Ej: Lunes y Miércoles")
+    nivel = models.CharField(max_length=1, choices=NIVELES, default='T')
     activo = models.BooleanField(default=True, help_text="Desmarcar si el taller ya finalizó o no está activo")
 
     def __str__(self):
