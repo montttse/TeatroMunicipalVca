@@ -182,7 +182,7 @@ function enviarWhatsapp(event) {
                             
     //enlace
     const mensajeCodificado = encodeURIComponent(mensaje);
-    const urlWhatsApp = `https://wa.me/${numeroTeatro}?text=${mensajeCodificado}`;
+    const urlWhatsApp = `https://api.whatsapp.com/send?phone=${numeroTeatro}&text=${mensajeCodificado}`;
     window.open(urlWhatsApp, '_blank');
 }
 
